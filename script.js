@@ -21,7 +21,7 @@ function embedVideo() {
         const iframe = document.createElement('iframe');
         iframe.src = `https://drive.google.com/file/d/${fileId}/preview`;
         iframe.width = "640";
-        iframe.height = "360";
+        iframe.height = "480";
         iframe.frameborder = "0";
         iframe.allowfullscreen = true;
 
