@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Simple Website</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to the external CSS file -->
+</head>
+<body>
+    <header>
+        <h1>Welcome to My Simple Website</h1>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#video">Video</a></li> <!-- Add link to the video section -->
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home">
+        <h2>Home</h2>
+        <p>This is the home section of my website. Welcome!</p>
+    </section>
+
+    <section id="about">
+        <h2>About</h2>
+        <p>This website is a simple example of HTML, CSS, and embedding Google Drive videos.</p>
+    </section>
+
+    <section id="video">
+        <h2>Watch the Video</h2>
+        
+        <!-- Input field to enter Google Drive video link -->
+        <input type="text" id="videoLink" placeholder="Enter Google Drive Video Link" />
+        
+        <!-- Button to trigger embedding the video -->
+        <button onclick="embedVideo()">Upload Video</button>
+        
+        <!-- Container where the video links and embedded videos will be displayed -->
+        <div id="videoContainer"></div>
+    </section>
+
+    <section id="contact">
+        <h2>Contact</h2>
+        <p>You can contact me at: example@example.com</p>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 My Simple Website</p>
+    </footer>
+
+    <script src="script.js"></script> <!-- Link to an external JavaScript file -->
+    
+    <script>
+        // Array to store the links of added videos
+        const videoLinks = [];
+
+        // Function to embed video and save the link
+        function embedVideo() {
+            // Get the Google Drive link from the input field
+            const link = document.getElementById('videoLink').value;
+
+            // Extract the file ID from the Google Drive link using a regular expression
+            const regex = /https:\/\/drive.google.com\/file\/d\/([^\/]+)\/preview/;
+            const match = link.match(regex);
+
+            if (match && match[1]) {
+                // Construct the iframe embed link with the file ID
+                const fileId = match[1];
+                const iframe = document.createElement('iframe');
+                iframe.src = `https://drive.google.com/file/d/${fileId}/preview`;
+                iframe.width = "640";
+                iframe.height = "360";
+                iframe.frameborder = "0";
+                iframe.allowfullscreen = true;
+
+                // Add the video link to the array
+                videoLinks.push(link);
+
+                // Get the container to append the new iframe
+                const videoContainer = document.getElementById('videoContainer');
+
+                // Create a new div to hold the iframe and the link text
+                const videoDiv = document.createElement('div');
+                const videoText = document.createElement('p');
+                videoText.textContent = link; // Display the link text
+
+                // Append the iframe and the link text to the video div
+                videoDiv.appendChild(iframe);
+                videoDiv.appendChild(videoText);
+
+                // Append the new div to the video container
+                videoContainer.appendChild(videoDiv);
+            } else {
+                alert('Please enter a valid Google Drive video link.');
+            }
+
+            // Clear the input field after the video is added
+            document.getElementById('videoLink').value = '';
+        }
+    </script>
+</body>
+</html>
