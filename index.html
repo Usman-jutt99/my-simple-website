@@ -26,7 +26,7 @@
 
     <section id="about">
         <h2>About</h2>
-        <p>This website is a simple example of HTML, CSS, and embedding a Google Drive video.</p>
+        <p>This website is a simple example of HTML, CSS, and embedding Google Drive videos.</p>
     </section>
 
     <section id="video">
@@ -38,7 +38,7 @@
         <!-- Button to trigger embedding the video -->
         <button onclick="embedVideo()">Upload Video</button>
         
-        <!-- Container where the video will be embedded -->
+        <!-- Container where the video links and embedded videos will be displayed -->
         <div id="videoContainer"></div>
     </section>
 
@@ -54,12 +54,15 @@
     <script src="script.js"></script> <!-- Link to an external JavaScript file -->
     
     <script>
-        // JavaScript function to embed the Google Drive video
+        // Array to store the links of added videos
+        const videoLinks = [];
+
+        // Function to embed video and save the link
         function embedVideo() {
             // Get the Google Drive link from the input field
             const link = document.getElementById('videoLink').value;
 
-            // Extract the file ID from the Google Drive link using regular expression
+            // Extract the file ID from the Google Drive link using a regular expression
             const regex = /https:\/\/drive.google.com\/file\/d\/([^\/]+)\/preview/;
             const match = link.match(regex);
 
@@ -73,13 +76,45 @@
                 iframe.frameborder = "0";
                 iframe.allowfullscreen = true;
 
-                // Get the container and append the iframe
+                // Add the video link to the array
+                videoLinks.push(link);
+
+                // Display the saved video link in a list
                 const videoContainer = document.getElementById('videoContainer');
-                videoContainer.innerHTML = ''; // Clear any previous video
-                videoContainer.appendChild(iframe);
+                
+                // Clear any previous videos in the container (optional)
+                videoContainer.innerHTML = '';
+
+                // Loop through the array and create a video section for each link
+                videoLinks.forEach(videoLink => {
+                    const videoDiv = document.createElement('div');
+                    const videoIframe = document.createElement('iframe');
+                    const videoText = document.createElement('p');
+
+                    // Embed each video using the saved link
+                    const videoMatch = videoLink.match(regex);
+                    if (videoMatch && videoMatch[1]) {
+                        videoIframe.src = `https://drive.google.com/file/d/${videoMatch[1]}/preview`;
+                        videoIframe.width = "640";
+                        videoIframe.height = "360";
+                        videoIframe.frameborder = "0";
+                        videoIframe.allowfullscreen = true;
+
+                        // Display the video link as text under the iframe
+                        videoText.textContent = videoLink;
+                    }
+
+                    // Append the iframe and link to the video container
+                    videoDiv.appendChild(videoIframe);
+                    videoDiv.appendChild(videoText);
+                    videoContainer.appendChild(videoDiv);
+                });
             } else {
                 alert('Please enter a valid Google Drive video link.');
             }
+
+            // Clear the input field after the video is added
+            document.getElementById('videoLink').value = '';
         }
     </script>
 </body>
