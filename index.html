@@ -54,9 +54,6 @@
     <script src="script.js"></script> <!-- Link to an external JavaScript file -->
     
     <script>
-        // Array to store the links of added videos
-        const videoLinks = [];
-
         // Function to embed video and save the link
         function embedVideo() {
             // Get the Google Drive link from the input field
@@ -76,10 +73,7 @@
                 iframe.frameborder = "0";
                 iframe.allowfullscreen = true;
 
-                // Add the video link to the array
-                videoLinks.push(link);
-
-                // Get the container to append the new iframe
+                // Get the container where the iframe will be placed
                 const videoContainer = document.getElementById('videoContainer');
 
                 // Create a new div to hold the iframe and the link text
@@ -93,12 +87,12 @@
 
                 // Append the new div to the video container
                 videoContainer.appendChild(videoDiv);
+
+                // Clear the input field after the video is added
+                document.getElementById('videoLink').value = '';
             } else {
                 alert('Please enter a valid Google Drive video link.');
             }
-
-            // Clear the input field after the video is added
-            document.getElementById('videoLink').value = '';
         }
     </script>
 </body>
