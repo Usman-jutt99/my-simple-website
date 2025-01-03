@@ -79,36 +79,20 @@
                 // Add the video link to the array
                 videoLinks.push(link);
 
-                // Display the saved video link in a list
+                // Get the container to append the new iframe
                 const videoContainer = document.getElementById('videoContainer');
-                
-                // Clear any previous videos in the container (optional)
-                videoContainer.innerHTML = '';
 
-                // Loop through the array and create a video section for each link
-                videoLinks.forEach(videoLink => {
-                    const videoDiv = document.createElement('div');
-                    const videoIframe = document.createElement('iframe');
-                    const videoText = document.createElement('p');
+                // Create a new div to hold the iframe and the link text
+                const videoDiv = document.createElement('div');
+                const videoText = document.createElement('p');
+                videoText.textContent = link; // Display the link text
 
-                    // Embed each video using the saved link
-                    const videoMatch = videoLink.match(regex);
-                    if (videoMatch && videoMatch[1]) {
-                        videoIframe.src = `https://drive.google.com/file/d/${videoMatch[1]}/preview`;
-                        videoIframe.width = "640";
-                        videoIframe.height = "360";
-                        videoIframe.frameborder = "0";
-                        videoIframe.allowfullscreen = true;
+                // Append the iframe and the link text to the video div
+                videoDiv.appendChild(iframe);
+                videoDiv.appendChild(videoText);
 
-                        // Display the video link as text under the iframe
-                        videoText.textContent = videoLink;
-                    }
-
-                    // Append the iframe and link to the video container
-                    videoDiv.appendChild(videoIframe);
-                    videoDiv.appendChild(videoText);
-                    videoContainer.appendChild(videoDiv);
-                });
+                // Append the new div to the video container
+                videoContainer.appendChild(videoDiv);
             } else {
                 alert('Please enter a valid Google Drive video link.');
             }
