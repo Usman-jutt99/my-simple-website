@@ -20,10 +20,14 @@ function embedVideo() {
         const fileId = match[1];
         const iframe = document.createElement('iframe');
         iframe.src = `https://drive.google.com/file/d/${fileId}/preview`;
-        iframe.width = "640";
-        iframe.height = "480";
-        iframe.frameborder = "0";
         iframe.allowfullscreen = true;
+
+        // Create a wrapper div for the video to maintain 16:9 aspect ratio
+        const videoWrapper = document.createElement('div');
+        videoWrapper.classList.add('video-wrapper');
+
+        // Append the iframe inside the videoWrapper
+        videoWrapper.appendChild(iframe);
 
         // Add the video link to the array
         videoLinks.push(link);
@@ -36,8 +40,8 @@ function embedVideo() {
         const videoText = document.createElement('p');
         videoText.textContent = link; // Display the link text
 
-        // Append the iframe and the link text to the video div
-        videoDiv.appendChild(iframe);
+        // Append the videoWrapper and the link text to the video div
+        videoDiv.appendChild(videoWrapper);
         videoDiv.appendChild(videoText);
 
         // Append the new div to the video container

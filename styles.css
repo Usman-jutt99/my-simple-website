@@ -62,12 +62,32 @@ button:hover {
     background-color: #444;
 }
 
-/* Styling for the iframe videos */
-iframe {
+/* Styling for the video container */
+#videoContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Styling for the individual video container */
+.video-wrapper {
+    position: relative;
     width: 100%;
-    height: 400px;
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+    height: 0;
+    overflow: hidden;
+    background-color: #000;
+    border-radius: 8px;
+}
+
+/* Iframe video styling */
+iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     border: none;
-    margin-bottom: 20px;
 }
 
 /* Styling for the video links below the iframe */
